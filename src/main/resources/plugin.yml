@@ -1,0 +1,3 @@
+name: Qapi
+version: '${project.version}'
+main: com.quiu.qapi.qapi.Qapi
