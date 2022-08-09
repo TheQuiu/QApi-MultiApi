@@ -25,7 +25,7 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter
     private String permission;
     private SECommand command;
 
-    private CommandSource sender;
+    private CommandSource commandSender;
 
     protected BaseCommand()
     {
@@ -43,7 +43,7 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter
      * @param commandSender Source of the command
      * @param commandArgs Passed command arguments
      */
-    public abstract void run(CommandSource commandSender, String[] commandArgs);
+    abstract void run(CommandSource commandSender, String[] commandArgs);
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -76,10 +76,10 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter
         @Override
         public boolean execute(CommandSender sender, String commandLabel, String[] args)
         {
-            sc.sender = new CommandSource(sender);
+            sc.commandSender = new CommandSource(sender);
             try
             {
-                sc.run(sc.sender, args);
+                sc.run(sc.commandSender, args);
                 return true;
             }
             catch (CommandFailException | CommandPermissionException | PlayerNotFoundException ex)
@@ -116,7 +116,7 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter
 
     public void send(String message)
     {
-        send(message, sender);
+        send(message, commandSender);
     }
 
     public void send(String message, Player player)
@@ -125,7 +125,7 @@ public abstract class BaseCommand implements CommandExecutor, TabCompleter
     }
     public void checkPermission(String permission)
     {
-        if (!sender.getSender().hasPermission(permission))
+        if (!commandSender.getSender().hasPermission(permission))
             throw new CommandPermissionException(permission);
     }
 

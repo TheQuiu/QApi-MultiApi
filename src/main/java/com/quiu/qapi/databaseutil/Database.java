@@ -1,4 +1,4 @@
-package com.quiu.qapi;
+package com.quiu.qapi.databaseutil;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
